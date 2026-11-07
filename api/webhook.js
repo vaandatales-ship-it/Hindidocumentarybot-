@@ -18,17 +18,18 @@ export default async function handler(req, res) {
       : `Topic received: ${topic}\n\n🎬 Documentary Agent active hai!`;
 
     const response = await fetch(
-      `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: chatId, text: reply })
-      }
-    );
+  `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`,
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: chatId, text: reply })
+  }
+);
 
-    const result = await response.json();
-    console.log("Telegram API status:", response.status);
-console.log("Telegram API result:", JSON.stringify(result));
+const resultText = await response.text();
+
+console.log("TELEGRAM_HTTP_STATUS:", response.status);
+console.log("TELEGRAM_RAW_RESPONSE:", resultText);
 
     return res.status(200).send("OK");
   } catch (error) {
